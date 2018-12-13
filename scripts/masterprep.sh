@@ -15,13 +15,15 @@ sed -i -e "s/^enabled=1/enabled=0/" /etc/yum.repos.d/epel.repo
 # Install base packages and update system to latest packages
 echo $(date) " - Install base packages and update system to latest packages"
 
-yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash-completion httpd-tools kexec-tools sos psacct java-1.8.0-openjdk-headless python-passlib glusterfs-fuse
+#yum -y install wget git net-tools bind-utils iptables-services bridge-utils bash-completion httpd-tools kexec-tools sos psacct java-1.8.0-openjdk-headless python-passlib glusterfs-fuse
+yum install -y  wget git zile nano net-tools docker-1.13.1d-utils iptables-services bash-completion sos psacct openssl-devel NetworkManager thon-cryptography python2-pip python-devel python-passlib jdk-headless "@Development Tools"
 yum -y install cloud-utils-growpart.noarch
+yum -y --enablerepo=epel install pyOpenSSL
 curl -o ansible.rpm https://releases.ansible.com/ansible/rpm/release/epel-7-x86_64/ansible-2.6.5-1.el7.ans.noarch.rpm
 yum -y --enablerepo=epel install ansible.rpm
 yum -y --enablerepo=epel install htop
 #yum -y install ansible
-yum -y update glusterfs-fuse
+#yum -y update glusterfs-fuse
 yum -y update --exclude=WALinuxAgent
 echo $(date) " - Base package insallation and updates complete"
 
@@ -39,17 +41,17 @@ xfs_growfs $rootdev
 
 # Install OpenShift utilities
 echo $(date) " - Installing OpenShift utilities"
-yum -y install openshift-ansible
+#yum -y install openshift-ansible
 
 # Install Docker
 echo $(date) " - Installing Docker"
 yum -y install docker
 
-# Update docker storage
-echo "
-# Adding insecure-registry option required by OpenShift
-OPTIONS=\"\$OPTIONS --insecure-registry 172.30.0.0/16\"
-" >> /etc/sysconfig/docker
+## Update docker storage
+#echo "
+## Adding insecure-registry option required by OpenShift
+#OPTIONS=\"\$OPTIONS --insecure-registry 172.30.0.0/16\"
+#" >> /etc/sysconfig/docker
 
 # Create thin pool logical volume for Docker
 echo $(date) " - Creating thin pool logical volume for Docker and staring service"
