@@ -41,7 +41,7 @@ xfs_growfs $rootdev
 
 # Install Docker
 echo $(date) " - Installing Docker"
-yum -y install docker
+#yum -y install docker
 
 ## Update docker storage
 #echo "
